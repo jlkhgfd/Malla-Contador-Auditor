@@ -1,0 +1,120 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.semestre {
+    margin-bottom: 30px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 20px;
+}
+
+.semestre:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.semestre h2 {
+    color: #0056b3;
+    border-left: 5px solid #0056b3;
+    padding-left: 10px;
+    margin-bottom: 15px;
+}
+
+.asignaturas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* 300px min width */
+    gap: 20px;
+}
+
+.asignatura-card {
+    background-color: #e9f5ff;
+    border: 1px solid #cce5ff;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.asignatura-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.asignatura-card h3 {
+    margin-top: 0;
+    color: #004085;
+    font-size: 1.1em;
+}
+
+.asignatura-card p {
+    margin: 5px 0;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.asignatura-card .creditos {
+    font-weight: bold;
+    color: #0056b3;
+}
+
+.requisitos {
+    font-style: italic;
+    color: #777;
+    font-size: 0.85em;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    background-color: #333;
+    color: #fff;
+    font-size: 0.9em;
+}
+
+/* --- Nuevos estilos para interactividad --- */
+
+/* Estilos para el ramo clickeado */
+.asignatura-card.clicked {
+    opacity: 0.6; /* Disminuye la intensidad */
+    border-color: #007bff;
+    background-color: #e0f2f7; /* Un color ligeramente diferente */
+    transform: scale(0.98); /* Ligeramente más pequeño */
+}
+
+/* Estilos para los ramos que el ramo clickeado "abre" (prerrequisitos) */
+.asignatura-card.abre-ramo {
+    background-color: #d4edda; /* Verde claro para resaltar */
+    border-color: #28a745; /* Borde verde */
+    box-shadow: 0 0 15px rgba(40, 167, 69, 0.4); /* Sombra verde */
+    transform: translateY(-3px) scale(1.02); /* Destacar un poco */
+}
+
+/* Transición suave para todos los cambios */
+.asignatura-card {
+    transition: all 0.3s ease-in-out;
+}
