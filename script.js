@@ -92,11 +92,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const sucesoresDirectos = prerrequisitosMap[codigoRamo];
         if (sucesoresDirectos) {
             sucesoresDirectos.forEach(sucesorCodigo => {
-                // IMPORTANT: Ensure the `sucesorCodigo` exactly matches the text content of the strong tag in your HTML.
-                // For example, if your HTML has "<p><strong>Código:</strong> AUD8011</p>", then `sucesorCodigo` must be "AUD8011".
-                const sucesorCard = document.querySelector(`.asignatura-card p strong:contains("${sucesorCodigo}")`);
+                // Selecciona la tarjeta directamente usando el atributo data-codigo
+                const sucesorCard = document.querySelector(`[data-codigo="${sucesorCodigo}"]`);
                 if (sucesorCard) {
-                    sucesorCard.closest('.asignatura-card').classList.add('abre-ramo');
+                    sucesorCard.classList.add('abre-ramo');
                     // Llamada recursiva para resaltar los sucesores de este sucesor
                     resaltarSucesores(sucesorCodigo, visitados);
                 }
@@ -119,10 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // 2. Limpiar clases temporales de todas las tarjetas
             limpiarClasesTemporales();
 
-            // Obtener el código del ramo clicado
-            const codigoElement = card.querySelector('p strong');
-            if (!codigoElement) return;
-            const codigoRamoClicado = codigoElement.textContent.trim();
+            // Obtener el código del ramo clicado del atributo data-codigo
+            const codigoRamoClicado = card.dataset.codigo;
+            if (!codigoRamoClicado) {
+                console.error("La tarjeta clickeada no tiene un atributo data-codigo.");
+                return; // Si no hay data-codigo, no podemos continuar
+            }
 
             // 3. Marcar la tarjeta clicada como 'clickeado' para el resaltado temporal
             card.classList.add('clickeado');
@@ -138,18 +139,5 @@ document.addEventListener('DOMContentLoaded', () => {
             resaltarSucesores(codigoRamoClicado);
         });
     });
-
-    // Polyfill básico para ':contains'
-    (function (originalQuerySelectorAll) {
-        document.querySelectorAll = function(selector) {
-            if (selector.includes(':contains(')) {
-                const parts = selector.split(':contains(');
-                const baseSelector = parts[0];
-                const textToFind = parts[1].slice(0, -1).replace(/\"/g, '').replace(/'/g, '');
-                const elements = originalQuerySelectorAll.call(this, baseSelector);
-                return Array.from(elements).filter(el => el.textContent.includes(textToFind));
-            }
-            return originalQuerySelectorAll.call(this, selector);
-        };
-    })(document.querySelectorAll);
+    // ¡IMPORTANTE! El polyfill para :contains se ha ELIMINADO porque ya no es necesario
 });
