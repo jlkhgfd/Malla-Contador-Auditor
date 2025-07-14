@@ -105,8 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event Listener para cada tarjeta de asignatura
     asignaturaCards.forEach(card => {
         card.addEventListener('click', () => {
-            // 1. Toggle el estado 'aprobado' en la tarjeta clicada
-            card.classList.toggle('aprobado');
+            const isApproved = card.classList.contains('aprobado');
+
+            // 1. Gestionar el estado 'aprobado':
+            // Si el ramo no está aprobado, lo marca como aprobado.
+            // Si ya está aprobado, NO lo desmarca, solo procede con el resaltado.
+            if (!isApproved) {
+                card.classList.add('aprobado');
+            }
 
             // 2. Limpiar clases temporales de todas las tarjetas
             limpiarClasesTemporales();
