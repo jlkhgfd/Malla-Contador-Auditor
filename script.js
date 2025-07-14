@@ -92,6 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const sucesoresDirectos = prerrequisitosMap[codigoRamo];
         if (sucesoresDirectos) {
             sucesoresDirectos.forEach(sucesorCodigo => {
+                // IMPORTANT: Ensure the `sucesorCodigo` exactly matches the text content of the strong tag in your HTML.
+                // For example, if your HTML has "<p><strong>Código:</strong> AUD8011</p>", then `sucesorCodigo` must be "AUD8011".
                 const sucesorCard = document.querySelector(`.asignatura-card p strong:contains("${sucesorCodigo}")`);
                 if (sucesorCard) {
                     sucesorCard.closest('.asignatura-card').classList.add('abre-ramo');
