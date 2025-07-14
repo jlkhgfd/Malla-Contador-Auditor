@@ -1,139 +1,63 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
-}
-
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-}
-
-header h1 {
-    margin: 0;
-}
-
-main {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 20px auto;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.semestre {
-    margin-bottom: 30px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 20px;
-}
-
-.semestre:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-}
-
-.semestre h2 {
-    color: #0056b3;
-    border-left: 5px solid #0056b3;
-    padding-left: 10px;
-    margin-bottom: 15px;
-}
-
-.asignaturas-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-}
-
+/* Estilos generales de la tarjeta */
 .asignatura-card {
-    background-color: #e0f7fa; /* Color de fondo base para ramos */
-    border: 1px solid #b2ebf2;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, opacity 0.3s ease;
-    cursor: pointer; /* Hace que el cursor indique que es clicable */
-    position: relative;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    /* ... otras propiedades de estilo base ... */
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.asignatura-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.asignatura-card h3 {
-    margin-top: 0;
-    color: #004085;
-    font-size: 1.1em;
-}
-
-.asignatura-card p {
-    margin: 5px 0;
-    font-size: 0.9em;
-    color: #555;
-}
-
-.asignatura-card .creditos {
-    font-weight: bold;
-    color: #0056b3;
-}
-
-.requisitos {
-    font-style: italic;
-    color: #777;
-    font-size: 0.85em;
-}
-
-footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 30px;
-    background-color: #333;
-    color: #fff;
-    font-size: 0.9em;
-}
-
-/* --- Estilos para interactividad --- */
-
-/* Estilos para el ramo clickeado (el que se presiona) */
+/* Estilos para el ramo clickeado */
 .asignatura-card.clickeado {
-    border-color: #ff9800; /* Borde naranja */
-    box-shadow: 0 0 15px rgba(255, 152, 0, 0.5);
-    transform: scale(1.02);
+    background-color: #ff9800; /* Naranja para el ramo clickeado */
+    border-color: #e65100; /* Borde más oscuro */
+    box-shadow: 0 0 15px rgba(255, 152, 0, 0.8);
+    transform: scale(1.03);
     z-index: 2;
-    background-color: #fff3e0; /* Fondo naranja claro */
 }
 
-/* Estilos para los ramos que se 'abren' (sucesores en la cadena de prerrequisitos) */
-.asignatura-card.abre-ramo {
-    background-color: #8bc34a; /* Un verde más fuerte para ramos que se 'abren' */
-    border-color: #388e3c;
-    box-shadow: 0 0 10px rgba(56, 142, 60, 0.6);
-    z-index: 1;
-    opacity: 1 !important; /* ¡IMPORTANTE! Asegura que siempre sea completamente visible */
-}
-
-/* Estilos para oscurecer los ramos no relevantes */
-.asignatura-card.se-oscurece:not(.aprobado):not(.clickeado):not(.abre-ramo) {
+/* Estilos para los ramos que se "oscurecen" */
+.asignatura-card.se-oscurece {
     opacity: 0.4;
-    /* REMOVIDO: pointer-events: none; */ /* ¡IMPORTANTE! Ahora puedes hacer clic en ellos */
+    /* transition: opacity 0.3s ease; (ya está en .asignatura-card) */
 }
 
-/* Estilos para ramos 'aprobados' (apagados y rayados) */
+/* Estilos para ramos aprobados (permanente) */
 .asignatura-card.aprobado {
-    background-color: #c8e6c9; /* Un verde más sólido para ramos aprobados */
-    border-color: #4CAF50;
-    text-decoration: line-through; /* Tachar el texto */
-    opacity: 0.7; /* Ligeramente opaco para indicar "completado" */
-    color: #6a6a6a; /* Color de texto más tenue */
+    background-color: #cccccc !important; /* Gris para aprobado */
+    border-color: #999999 !important;
+    text-decoration: line-through; /* Tachado */
+    opacity: 0.7; /* Ligeramente transparente */
+    cursor: not-allowed; /* Indicar que ya está aprobado */
+    box-shadow: none;
+    transform: none; /* Asegura que no se escale si se aprobó */
 }
 
-.asignatura-card.aprobado h3,
-.asignatura-card.aprobado p {
-    color: #6a6a6a; /* Asegurar que el texto dentro también sea más tenue */
+/* Estilos para ramos que se "abren" (sucesores directos) */
+/* El background-color y border-color se establecerán con JavaScript dinámicamente */
+.asignatura-card.abre-ramo {
+    opacity: 1 !important; /* Asegura que sea completamente visible */
+    transform: scale(1.02); /* Ligeramente más grande */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); /* Sombra para destacarlos */
+    border: 2px solid; /* El color del borde se establecerá en JS */
+    z-index: 1; /* Por encima de los oscurecidos, pero debajo del clickeado */
+    /* transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease; (ya está en .asignatura-card) */
+}
+
+/* Asegurarse que aprobado siempre tiene prioridad visual */
+.asignatura-card.aprobado.clickeado {
+    background-color: #cccccc !important; /* Mantiene el gris de aprobado */
+    border-color: #999999 !important;
+    text-decoration: line-through;
+    opacity: 0.7;
+    box-shadow: none; /* No debería tener la sombra naranja si está aprobado */
+    transform: none; /* No debería escalarse si está aprobado */
+}
+
+.asignatura-card.aprobado.abre-ramo {
+    background-color: #cccccc !important;
+    border-color: #999999 !important;
+    text-decoration: line-through;
+    opacity: 0.7;
+    box-shadow: none;
+    transform: none;
 }
